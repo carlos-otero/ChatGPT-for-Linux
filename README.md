@@ -1,105 +1,105 @@
-# 🐧 ChatGPT for Linux (Cliente con Nativefier)
+# 🐧 ChatGPT for Linux (Nativefier Client)
 
-Esta guía te muestra cómo crear una aplicación de escritorio de ChatGPT para Linux (distribuciones basadas en Debian/Ubuntu) usando [Nativefier](https://github.com/nativefier/nativefier).
+This guide shows you how to create a desktop application for ChatGPT on Linux (Debian/Ubuntu-based distributions) using [Nativefier](https://github.com/nativefier/nativefier).
 
-Nativefier envuelve cualquier sitio web (en este caso, `chat.openai.com`) en una aplicación de Electron, dándote un cliente de escritorio simple y aislado de tu navegador principal.
+Nativefier wraps any website (in this case, `chat.openai.com`) into an Electron application, giving you a simple desktop client that is separate from your main browser.
 
-## 1. Preparar el Entorno (Node.js con NVM)
+## 1. Prepare Your Environment (Node.js with NVM)
 
-En lugar de usar `apt`, usaremos `nvm` (Node Version Manager) para instalar `node` y `npm`. Esto evita problemas de permisos y nos permite instalar la versión más reciente y compatible.
+Instead of using `apt`, we will use `nvm` (Node Version Manager) to install `node` and `npm`. This avoids permission issues and allows us to install the most compatible recent version.
 
 ```bash
-# 1. Descarga e instala nvm (Node Version Manager)
+# 1. Download and install nvm (Node Version Manager)
 curl -o- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh) | bash
 
-# 2. Activa nvm en tu sesión actual
-# (Tal vez necesites cerrar y reabrir tu terminal después de este paso)
+# 2. Activate nvm in your current session
+# (You may need to close and reopen your terminal after this step)
 export NVM_DIR="$HOME/.nvm"
 source "$NVM_DIR/nvm.sh"
 
-# 3. Instala, usa y pon por defecto Node.js v18 (una versión LTS estable)
+# 3. Install, use, and set Node.js v18 (a stable LTS version) as default
 nvm install 18
 nvm use 18
 nvm alias default 18
 
-# 4. Confirma las versiones
+# 4. Confirm the versions
 echo "Node version:"
-node -v  # Debería ser v18.x.x
+node -v  # Should be v18.x.x
 echo "NPM version:"
-npm -v   # Debería ser 9.x.x o 10.x.x
+npm -v   # Should be 9.x.x or 10.x.x
 ````
 
-## 2\. Instalar Nativefier
+## 2\. Install Nativefier
 
-Ahora que tienes `npm`, puedes instalar `nativefier` de forma global en tu sistema:
+Now that you have `npm`, you can install `nativefier` globally on your system:
 
 ```bash
 npm install -g nativefier
 ```
 
-## 3\. Crear la Aplicación ChatGPT
+## 3\. Create the ChatGPT Application
 
-1.  Decide dónde quieres que se "instale" la aplicación. Un buen lugar es una carpeta `Apps` en tu directorio `home`.
-2.  Navega a ese directorio y ejecuta el comando de `nativefier`.
+1.  Decide where you want the application to be "installed". A good place is an `Apps` folder in your `home` directory.
+2.  Navigate to that directory and run the `nativefier` command.
 
 <!-- end list -->
 
 ```bash
-# Crea la carpeta si no existe y entra en ella
+# Create the folder if it doesn't exist and enter it
 mkdir -p ~/Apps
 cd ~/Apps
 
-# Ejecuta nativefier con opciones recomendadas
+# Run nativefier with recommended options
 nativefier --name "ChatGPT" \
            --single-instance \
            --internal-urls ".*chat.openai.com.*" \
            "[https://chat.openai.com](https://chat.openai.com)"
 ```
 
-**Explicación de las opciones:**
+**Option Explanations:**
 
-  * `--name "ChatGPT"`: El nombre de la aplicación.
-  * `--single-instance`: Evita que abras múltiples ventanas de la app por accidente.
-  * `--internal-urls ".*chat.openai.com.*"`: Fuerza a que cualquier enlace *fuera* de ChatGPT (p.ej., un enlace a Google) se abra en tu navegador web normal, manteniendo la app limpia.
+  * `--name "ChatGPT"`: The name of the application.
+  * `--single-instance`: Prevents you from accidentally opening multiple windows of the app.
+  * `--internal-urls ".*chat.openai.com.*"`: Forces any links *outside* of ChatGPT (e.g., a Google link) to open in your regular web browser, keeping the app clean.
 
-Nativefier trabajará por unos segundos y creará una nueva carpeta llamada `ChatGPT-linux-x64` en el directorio `~/Apps`.
+Nativefier will work for a few seconds and create a new folder named `ChatGPT-linux-x64` in your `~/Apps` directory.
 
-## 4\. (Opcional) Crear un Acceso Directo en el Menú
+## 4\. (Optional) Create a Menu Shortcut
 
-Para que "ChatGPT" aparezca en tu menú de aplicaciones (junto a Firefox, VSCode, etc.), necesitas crear un archivo `.desktop`.
+To make "ChatGPT" appear in your applications menu (alongside Firefox, VSCode, etc.), you need to create a `.desktop` file.
 
-1.  Abre un editor de texto (como `nano`) para crear el archivo del lanzador:
+1.  Open a text editor (like `nano`) to create the launcher file:
 
     ```bash
     nano ~/.local/share/applications/chatgpt.desktop
     ```
 
-2.  **Pega el siguiente contenido** dentro de `nano`.
+2.  **Paste the following content** into `nano`.
 
-    **¡IMPORTANTE\!** Debes reemplazar `TU_USUARIO` con tu nombre de usuario real (el que ves en tu terminal, ej. `/home/tunombredeusuario`).
+    **IMPORTANT\!** You must replace `YOUR_USER` with your actual username (the one you see in your terminal prompt, e.g., `/home/yourusername`).
 
     ```ini
     [Desktop Entry]
     Version=1.0
     Type=Application
     Name=ChatGPT
-    Comment=Cliente de escritorio para ChatGPT (creado con Nativefier)
+    Comment=Desktop client for ChatGPT (created with Nativefier)
 
-    # ¡¡CAMBIA ESTA RUTA!!
-    # Reemplaza 'TU_USUARIO' por tu nombre de usuario
-    Exec=/home/TU_USUARIO/Apps/ChatGPT-linux-x64/ChatGPT
+    # CHANGE THIS PATH!!
+    # Replace 'YOUR_USER' with your username
+    Exec=/home/YOUR_USER/Apps/ChatGPT-linux-x64/ChatGPT
 
-    # Esta ruta al ícono debería ser la correcta
-    # Reemplaza 'TU_USUARIO' por tu nombre de usuario
-    Icon=/home/TU_USUARIO/Apps/ChatGPT-linux-x64/resources/app/icon.png
+    # This icon path should be correct
+    # Replace 'YOUR_USER' with your username
+    Icon=/home/YOUR_USER/Apps/ChatGPT-linux-x64/resources/app/icon.png
 
     Terminal=false
     Categories=Utility;Network;Application;
     ```
 
-3.  Guarda el archivo y cierra `nano` (Ctrl+O, Enter, Ctrl+X).
+3.  Save the file and exit `nano` (Ctrl+O, Enter, Ctrl+X).
 
-4.  Finalmente, dale permisos de ejecución al lanzador:
+4.  Finally, make the launcher executable:
 
     ```bash
     chmod +x ~/.local/share/applications/chatgpt.desktop
@@ -107,7 +107,7 @@ Para que "ChatGPT" aparezca en tu menú de aplicaciones (junto a Firefox, VSCode
 
 -----
 
-¡Y eso es todo\! Ahora deberías poder buscar "ChatGPT" en tu menú de aplicaciones e iniciarlo como cualquier otro programa.
+That's it\! You should now be able to search for "ChatGPT" in your applications menu and launch it just like any other program.
 
 ```
 ```

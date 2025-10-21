@@ -10,7 +10,7 @@ En lugar de usar `apt`, usaremos `nvm` (Node Version Manager) para instalar `nod
 
 ```bash
 # 1. Descarga e instala nvm (Node Version Manager)
-curl -o- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh) | bash
+curl -o- [https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh](https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh) | bash
 
 # 2. Activa nvm en tu sesión actual
 # (Tal vez necesites cerrar y reabrir tu terminal después de este paso)
